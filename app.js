@@ -168,6 +168,14 @@ function setupEventListeners() {
         showScreen('length');
     });
 
+    document.getElementById('side-step-25-btn').addEventListener('click', () => {
+        console.log('side-step-25 button clicked');
+        appState.phraseType = 'side_step_25';
+        appState.chordType = null; // Reset chord type
+        console.log('App state after side-step-25 selection:', appState);
+        navigateToGenerator();
+    });
+
     document.getElementById('turnaround-btn').addEventListener('click', () => {
         appState.phraseType = 'turnaround';
         navigateToGenerator();
@@ -514,6 +522,7 @@ function getPhraseTypeDisplay(phraseType) {
         case 'major': return 'Major';
         case 'major_25': return 'Major 25';
         case 'minor_25': return 'Minor 25';
+        case 'side_step_25': return 'Side-step 25';
         case 'backdoor_25': return 'Backdoor 25';
         case 'tritone_sub_25_major': return 'Tritone-sub 25 Major';
         case 'tritone_sub_25_minor': return 'Tritone-sub 25 Minor';
@@ -935,6 +944,8 @@ function getFinalPhraseType(useRandomCycling = false) {
         return appState.length === 'short' ? 'short_25_major' : 'long_25_major';
     } else if (appState.phraseType === 'minor_25') {
         return appState.length === 'short' ? 'short_25_minor' : 'long_25_minor';
+    } else if (appState.phraseType === 'side_step_25') {
+        return 'long_side_step_25';
             } else if (appState.phraseType === 'iii_to_biii') {
             return appState.length === 'short' ? 'iii_to_biii' : 'long_iii_to_biii';
         } else if (appState.phraseType === 'biii_to_ii_old') {
@@ -1023,6 +1034,8 @@ function getKeyDisplayText(phraseType, selectedKey, generatedKey) {
         // DESIGNATE MODE - use selected key for display
         if (phraseType.includes("25_major")) {
             return getMajor25ChordProgression(selectedKey);
+        } else if (phraseType.includes("side_step_25")) {
+            return getSideStep25ChordProgression(selectedKey);
         } else if (phraseType.includes("25_minor")) {
             return getMinor25ChordProgression(selectedKey);
         } else if (phraseType === "turnaround") {
@@ -1085,6 +1098,10 @@ function getKeyDisplayText(phraseType, selectedKey, generatedKey) {
             // Map the generated key to the correct display key
             const displayKey = mapRandomKeyForDisplay(phraseType, generatedKey);
             return getMajor25ChordProgression(displayKey);
+        } else if (phraseType.includes("side_step_25")) {
+            // Map the generated key to the correct display key
+            const displayKey = mapRandomKeyForDisplay(phraseType, generatedKey);
+            return getSideStep25ChordProgression(displayKey);
         } else if (phraseType.includes("25_minor")) {
             // Map the generated key to the correct display key
             const displayKey = mapRandomKeyForDisplay(phraseType, generatedKey);
@@ -1162,7 +1179,7 @@ function getDominantOrRelativeMajorKey(phraseType, tonicKey) {
     
     const keySemitones = KEYS[tonicKey];
     
-    if (phraseType.includes("25_major")) {
+    if (phraseType.includes("25_major") || phraseType.includes("side_step_25")) {
         // Map to dominant (5th above)
         const dominantSemitones = (keySemitones + 7) % 12;
         for (const [key, semitones] of Object.entries(KEYS)) {
@@ -1210,6 +1227,31 @@ function getMajor25ChordProgression(key) {
         return `${iiKey}m ${vKey}7 ${key}`;
     }
     return `in the key of ${key}`;
+}
+
+function getSideStep25ChordProgression(key) {
+    // Side-step 25 progression: biiim bVI7 iim V7 I
+    // Examples: C = "Ebm Ab7 Dm G7 C", F = "Abm Db7 Gm C7 F"
+    
+    const keySemitones = KEYS[key];
+    const biiiSemitones = (keySemitones + 3) % 12;  // 3 semitones up from tonic (biii)
+    const bviSemitones = (keySemitones + 8) % 12;   // 8 semitones up from tonic (bVI)
+    const iiSemitones = (keySemitones + 2) % 12;    // 2 semitones up from tonic (ii)
+    const vSemitones = (keySemitones + 7) % 12;     // 7 semitones up from tonic (V)
+    
+    let biiiKey = null;
+    let bviKey = null;
+    let iiKey = null;
+    let vKey = null;
+    
+    for (const [k, semitones] of Object.entries(KEYS)) {
+        if (semitones === biiiSemitones) biiiKey = k;
+        if (semitones === bviSemitones) bviKey = k;
+        if (semitones === iiSemitones) iiKey = k;
+        if (semitones === vSemitones) vKey = k;
+    }
+    
+    return `${biiiKey}m ${bviKey}7 ${iiKey}m ${vKey}7 ${key}`;
 }
 
 function getMinor25ChordProgression(key) {
@@ -1425,7 +1467,7 @@ function mapRandomKeyForDisplay(phraseType, generatedKey) {
     // Reverse the mapping done in getDominantOrRelativeMajorKey
     const generatedSemitones = KEYS[generatedKey];
     
-    if (phraseType.includes("25_major")) {
+    if (phraseType.includes("25_major") || phraseType.includes("side_step_25")) {
         // Generated key is dominant, find the tonic (5th below)
         const tonicSemitones = (generatedSemitones - 7 + 12) % 12;
         for (const [key, semitones] of Object.entries(KEYS)) {

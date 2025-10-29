@@ -469,6 +469,10 @@ function initializeTransposedCells() {
     window.CELLS2_up2 = transposeCells(window.CELLS2, 2, "C");
     console.log('CELLS2_up2 generated:', window.CELLS2_up2.length, 'cells');
     
+    console.log('Generating CELLS2_up1...');
+    window.CELLS2_up1 = transposeCells(window.CELLS2, 1, "C");
+    console.log('CELLS2_up1 generated:', window.CELLS2_up1.length, 'cells');
+    
     console.log('Generating CELLS2_up5...');
     window.CELLS2_up5 = transposeCells(window.CELLS2, 5, "C");
     console.log('CELLS2_up5 generated:', window.CELLS2_up5.length, 'cells');
@@ -512,6 +516,10 @@ function initializeTransposedCells() {
     console.log('Generating CELLS_up5...');
     window.CELLS_up5 = filterCellsStartingWith(transposeCells(BASE_CELLS, 5, "C"), "F");
     console.log('CELLS_up5 generated:', window.CELLS_up5.length, 'cells');
+    
+    console.log('Generating CELLS_up1...');
+    window.CELLS_up1 = filterCellsStartingWith(transposeCells(BASE_CELLS, 1, "C"), "F");
+    console.log('CELLS_up1 generated:', window.CELLS_up1.length, 'cells');
     
     console.log('Generating CELLS_up2...');
     window.CELLS_up2 = filterCellsStartingWith(transposeCells(BASE_CELLS, 2, "C"), "F");
@@ -565,6 +573,8 @@ function initializeTransposedCells() {
     window.MINOR_C_CELLS_DOWN2_GLOBAL = window.MINOR_C_CELLS_DOWN2;
     window.CELLS_up5_GLOBAL = window.CELLS_up5;
     window.CELLS_up2_GLOBAL = window.CELLS_up2;
+    window.CELLS_up1_GLOBAL = window.CELLS_up1;
+    window.CELLS2_up1_GLOBAL = window.CELLS2_up1;
     window.CELLS_down5_GLOBAL = window.CELLS_down5;
     window.CELLS_down4_GLOBAL = window.CELLS_down4;
     window.MAJOR_CELLS_down4_GLOBAL = window.MAJOR_CELLS_down4;

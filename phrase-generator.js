@@ -130,16 +130,16 @@ function initializeCyclers(phraseType) {
         leftCycler = new Cycler(CELLS);
         rightCycler = new Cycler(CELLS);
     } else {
-        // For short_25_major, long_25_major and others
-        const cellSet = (phraseType === "short_25_major" || phraseType === "long_25_major") ? window.CELLS2 : CELLS;
+        // For short_25_major, long_25_major, side-step 25 and others
+        const cellSet = (phraseType === "short_25_major" || phraseType === "long_25_major" || phraseType === "long_side_step_25") ? window.CELLS2 : CELLS;
         leftCycler = new Cycler(cellSet);
-        rightCycler = new Cycler((phraseType === "short_25_major" || phraseType === "long_25_major") ? MAJOR_RESOLUTION_CELLS : cellSet);
+        rightCycler = new Cycler((phraseType === "short_25_major" || phraseType === "long_25_major" || phraseType === "long_side_step_25") ? MAJOR_RESOLUTION_CELLS : cellSet);
     }
     
     // Initialize resolution cycler - EXACT MATCH TO PYTHON
     if (phraseType === "long_25_minor") {
         resolutionCycler = new Cycler(MINOR_C_CELLS);
-    } else if (phraseType === "short_25_major" || phraseType === "long_25_major" || phraseType === "turnaround" || phraseType === "backdoor_25" || phraseType === "iv_iv" || phraseType === "d7_to_db") {
+    } else if (phraseType === "short_25_major" || phraseType === "long_25_major" || phraseType === "long_side_step_25" || phraseType === "turnaround" || phraseType === "backdoor_25" || phraseType === "iv_iv" || phraseType === "d7_to_db") {
         resolutionCycler = new Cycler(MAJOR_RESOLUTION_CELLS);
     } else if (phraseType === "rhythm_changes_56") {
         resolutionCycler = new Cycler(DFB);
@@ -257,6 +257,7 @@ function generatePhrase(phraseType = "7sus4", selectedKey = null, chordType = nu
         "long_25_major": 17,
         "short_25_minor": 9,
         "long_25_minor": 17,
+        "long_side_step_25": 17,
         "backdoor_25": 17,
         "short_backdoor_25": 9,
         "tritone_sub_25_major": 17,
@@ -324,6 +325,10 @@ function generatePhrase(phraseType = "7sus4", selectedKey = null, chordType = nu
                 phraseLength = result.length;
             } else if (phraseType === "long_25_minor") {
                 const result = generateLong25MinorPhrase(keyName);
+                phrase = result.phrase;
+                phraseLength = result.length;
+            } else if (phraseType === "long_side_step_25") {
+                const result = generateLongSideStep25Phrase(keyName);
                 phrase = result.phrase;
                 phraseLength = result.length;
             } else if (phraseType === "turnaround") {
@@ -686,6 +691,57 @@ function generateLong25MajorPhrase(keyName) {
             phrase = leftCell.slice(0, -1).concat(adjustedNewCell);
         } else {
             throw new Error("No compatible cells found for long_25_major phrase");
+        }
+    }
+    
+    // Validate phrase for problematic sequence
+    if (!validatePhraseForProblematicSequence(phrase)) {
+        throw new Error("Generated phrase contains problematic sequence, retrying...");
+    }
+    
+    return { phrase: phrase, length: phrase.length };
+}
+
+// Generate long side-step 25 phrase
+function generateLongSideStep25Phrase(keyName) {
+    let resolutionCell = resolutionCycler.nextItem();  // Position 3 (rightmost, first in time)
+    let phrase = resolutionCell;
+    console.log('Long side-step 25 - Position 3 (resolution):', resolutionCell, 'starts with:', resolutionCell[0]);
+    
+    // Position order: [position 2, position 1, position 0] - added right to left
+    // Position 3 (Resolution): Uses MAJOR_RESOLUTION_CELLS - the final resolution cell
+    // Position 2: Uses CELLS2 (same as Major long 25 construction)
+    // Position 1: Uses CELLS_up1 (new cell set)
+    // Position 0 (Leftmost): Uses CELLS_up1 (new cell set)
+    const cellSets = [window.CELLS2, window.CELLS_up1, window.CELLS_up1];
+    const positionNames = ['Position 2', 'Position 1', 'Position 0'];
+    let usedCells = new Set(); // Track used cells to avoid duplicates
+    usedCells.add(resolutionCell.join(' ')); // Add the resolution cell
+    
+    for (let i = 0; i < cellSets.length; i++) {
+        const cellSet = cellSets[i];
+        const positionName = positionNames[i];
+        const firstNoteCurrent = phrase[0].slice(0, -1);
+        const dominantCompatibleCells = cellSet.filter(cell => cell[cell.length - 1].slice(0, -1) === firstNoteCurrent);
+        
+        console.log(`Looking for ${positionName} cells ending with pitch class:`, firstNoteCurrent);
+        console.log(`Found ${dominantCompatibleCells.length} compatible cells in ${positionName}`);
+        
+        if (dominantCompatibleCells.length > 0) {
+            // Filter out already used cells
+            const unusedCompatibleCells = dominantCompatibleCells.filter(cell => !usedCells.has(cell.join(' ')));
+            
+            if (unusedCompatibleCells.length === 0) {
+                throw new Error(`No unused compatible cells found for long side-step 25 phrase at ${positionName}`);
+            }
+            
+            const leftCell = new Cycler(unusedCompatibleCells).nextItem();
+            console.log(`Long side-step 25 - ${positionName}:`, leftCell, 'starts with:', leftCell[0]);
+            usedCells.add(leftCell.join(' ')); // Mark this cell as used
+            const adjustedNewCell = adjustRightCell(leftCell, phrase);
+            phrase = leftCell.slice(0, -1).concat(adjustedNewCell);
+        } else {
+            throw new Error(`No compatible cells found for long side-step 25 phrase at ${positionName}`);
         }
     }
     
@@ -1588,7 +1644,7 @@ function generateLongBiiiToIiOldPhrase(keyName) {
 function validateResolutionCell(phrase, phraseType) {
     console.log(`Validating resolution cell for phrase type: ${phraseType}`);
     
-    if (["short_25_major", "long_25_major", "turnaround"].includes(phraseType)) {
+    if (["short_25_major", "long_25_major", "long_side_step_25", "turnaround"].includes(phraseType)) {
         const resolutionCell = phrase.slice(-5);
         const resolutionCellStr = resolutionCell.join(" ");
         
