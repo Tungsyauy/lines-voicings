@@ -2,7 +2,7 @@
 
 // Application state
 let appState = {
-    currentScreen: 'mode',
+    currentScreen: 'welcome',
     mode: null,              // 'random' or 'designate'
     selectedKey: null,       // Selected key for designate mode
     phraseType: null,        // Selected phrase type
@@ -18,27 +18,6 @@ let appState = {
 let currentPhraseData = null;
 let currentPhraseType = null;
 let showingPartialPhrase = true;
-
-// Add orientation change handling
-let currentOrientation = window.orientation || 0;
-let notationRendered = false;
-
-function handleOrientationChange() {
-    const newOrientation = window.orientation || 0;
-    if (newOrientation !== currentOrientation) {
-        currentOrientation = newOrientation;
-        console.log('Orientation changed to:', newOrientation);
-        
-        // Re-render notation if it's currently displayed
-        if (notationRendered && currentPhraseData) {
-            // Longer delay to ensure orientation change is complete
-            setTimeout(() => {
-                console.log('Re-rendering notation after orientation change');
-                updatePhraseDisplay();
-            }, 300); // Increased delay for better stability
-        }
-    }
-}
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -92,19 +71,14 @@ function preventZoomAndScaling() {
 
 function initializeApp() {
     setupEventListeners();
-    
-    // Add orientation change event listeners
-    window.addEventListener('orientationchange', handleOrientationChange);
-    window.addEventListener('resize', handleOrientationChange);
-    
-    // Initialize orientation detection
-    currentOrientation = window.orientation || 0;
-    
-    showScreen('mode');
+    showScreen('welcome');
 }
 
 function setupEventListeners() {
-    // Mode selection screen is now the first screen
+    // Welcome screen - Login interface
+    document.getElementById('login-btn').addEventListener('click', () => {
+        showScreen('mode');
+    });
 
     // Mode selection
     document.getElementById('random-btn').addEventListener('click', () => {
@@ -144,11 +118,6 @@ function setupEventListeners() {
         showScreen('length');
     });
 
-    document.getElementById('25s-btn').addEventListener('click', () => {
-        console.log('25s button clicked');
-        showScreen('25-type');
-    });
-
     document.getElementById('major-25-btn').addEventListener('click', () => {
         console.log('major-25 button clicked');
         appState.phraseType = 'major_25';
@@ -165,14 +134,6 @@ function setupEventListeners() {
         showScreen('length');
     });
 
-    document.getElementById('side-step-25-btn').addEventListener('click', () => {
-        console.log('side-step-25 button clicked');
-        appState.phraseType = 'side_step_25';
-        appState.chordType = null; // Reset chord type
-        console.log('App state after side-step-25 selection:', appState);
-        navigateToGenerator();
-    });
-
     document.getElementById('turnaround-btn').addEventListener('click', () => {
         appState.phraseType = 'turnaround';
         navigateToGenerator();
@@ -186,66 +147,6 @@ function setupEventListeners() {
     document.getElementById('ii7-v7-btn').addEventListener('click', () => {
         appState.phraseType = 'ii7_to_v7';
         navigateToGenerator();
-    });
-
-            document.getElementById('biii-to-ii-btn').addEventListener('click', () => {
-            showScreen('biii-to-ii-type');
-        });
-
-    document.getElementById('i-dim-to-i-btn').addEventListener('click', () => {
-        showScreen('i-dim-to-i-type');
-    });
-
-    document.getElementById('backdoor-25-btn').addEventListener('click', () => {
-        appState.phraseType = 'backdoor_25';
-        showScreen('length');
-    });
-
-    document.getElementById('tritone-sub-25-btn').addEventListener('click', () => {
-        showScreen('tritone-sub-25-type');
-    });
-
-    // Tritone-sub 25 sub-type selection
-    document.getElementById('tritone-sub-25-major-btn').addEventListener('click', () => {
-        appState.phraseType = 'tritone_sub_25_major';
-        navigateToGenerator();
-    });
-
-    document.getElementById('tritone-sub-25-minor-btn').addEventListener('click', () => {
-        appState.phraseType = 'tritone_sub_25_minor';
-        navigateToGenerator();
-    });
-
-    document.getElementById('d7-to-db-btn').addEventListener('click', () => {
-        appState.phraseType = 'd7_to_db';
-        navigateToGenerator();
-    });
-
-    document.getElementById('iv-iv-btn').addEventListener('click', () => {
-        appState.phraseType = 'iv_iv';
-        showScreen('length');
-    });
-
-    // biii° to ii sub-type selection
-    document.getElementById('iii-to-biii-btn').addEventListener('click', () => {
-        appState.phraseType = 'iii_to_biii';
-        showScreen('length');
-    });
-
-    document.getElementById('vi-to-ii7b9-btn').addEventListener('click', () => {
-        appState.phraseType = 'biii_to_ii_old';
-        showScreen('length');
-    });
-
-    // i° to I sub-type selection
-    document.getElementById('iv7-to-iv-sharp-dim-btn').addEventListener('click', () => {
-        appState.phraseType = 'iv7_to_iv_sharp_dim';
-        showScreen('length');
-    });
-
-    document.getElementById('iv-sharp-half-dim-to-vii7-btn').addEventListener('click', () => {
-        appState.phraseType = 'iv_sharp_half_dim_to_vii7';
-        showScreen('length');
     });
 
     // Chord type selection (7sus4)
@@ -309,7 +210,8 @@ function setupEventListeners() {
         toggleButton.addEventListener('click', handleTogglePhrase);
     }
 
-    // Return arrows - mode-return now goes to main page via HTML link
+    // Return arrows
+    document.getElementById('mode-return').addEventListener('click', () => showScreen('welcome'));
     document.getElementById('key-return').addEventListener('click', () => showScreen('mode'));
     document.getElementById('phrase-type-return').addEventListener('click', () => {
         if (appState.mode === 'designate') {
@@ -319,46 +221,28 @@ function setupEventListeners() {
         }
     });
     document.getElementById('chord-type-return').addEventListener('click', () => showScreen('phrase-type'));
-    document.getElementById('25-type-return').addEventListener('click', () => showScreen('phrase-type'));
-    document.getElementById('tritone-sub-25-type-return').addEventListener('click', () => showScreen('25-type'));
-    document.getElementById('biii-to-ii-type-return').addEventListener('click', () => showScreen('phrase-type'));
-    document.getElementById('i-dim-to-i-type-return').addEventListener('click', () => showScreen('phrase-type'));
-            document.getElementById('length-return').addEventListener('click', () => {
-            if (appState.phraseType === '7sus4') {
-                showScreen('chord-type');
-            } else if (appState.phraseType === 'major_25' || appState.phraseType === 'minor_25' || appState.phraseType === 'backdoor_25' || appState.phraseType === 'tritone_sub_25_major' || appState.phraseType === 'tritone_sub_25_minor' || appState.phraseType === 'd7_to_db') {
-                showScreen('25-type');
-            } else if (appState.phraseType === 'iii_to_biii' || appState.phraseType === 'biii_to_ii_old') {
-                showScreen('biii-to-ii-type');
-            } else if (appState.phraseType === 'iv7_to_iv_sharp_dim' || appState.phraseType === 'iv_sharp_half_dim_to_vii7') {
-                showScreen('i-dim-to-i-type');
-            } else {
-                showScreen('phrase-type');
-            }
-        });
-            document.getElementById('phrase-generator-return').addEventListener('click', () => {
-                    if (appState.phraseType === '7sus4' || appState.phraseType === 'major' || 
-            appState.phraseType === 'major_25' || appState.phraseType === 'minor_25' ||
-            appState.phraseType === 'iii_to_biii' || appState.phraseType === 'biii_to_ii_old' || appState.phraseType === 'backdoor_25' ||
-            appState.phraseType === 'iv_iv' ||
-            appState.phraseType === 'iv7_to_iv_sharp_dim' || appState.phraseType === 'iv_sharp_half_dim_to_vii7' ||
-            appState.phraseType === 'long_iv_sharp_half_dim_to_vii7') {
-                showScreen('length');
-            } else {
-                showScreen('phrase-type');
-            }
-        });
+    document.getElementById('length-return').addEventListener('click', () => {
+        if (appState.phraseType === '7sus4') {
+            showScreen('chord-type');
+        } else {
+            showScreen('phrase-type');
+        }
+    });
+    document.getElementById('phrase-generator-return').addEventListener('click', () => {
+        if (appState.phraseType === '7sus4' || appState.phraseType === 'major' || 
+            appState.phraseType === 'major_25' || appState.phraseType === 'minor_25') {
+            showScreen('length');
+        } else {
+            showScreen('phrase-type');
+        }
+    });
 
-    // Keyboard navigation (PC mode)
-    // Escape, Delete, or Backspace keys act as backward navigation
+    // Keyboard navigation
     document.addEventListener('keydown', handleKeyPress);
 }
 
-// Handle keyboard input for PC mode
-// Escape, Delete, or Backspace keys act as backward navigation
-// Enter or Space keys control phrase display in phrase generator
 function handleKeyPress(event) {
-    if (event.key === 'Escape' || event.key === 'Delete' || event.key === 'Backspace') {
+    if (event.key === 'Escape') {
         handleBackNavigation();
     } else if (event.key === 'Enter' || event.key === ' ') {
         if (appState.currentScreen === 'phrase-generator') {
@@ -372,74 +256,39 @@ function handleKeyPress(event) {
 }
 
 function handleBackNavigation() {
-    console.log('Back navigation triggered from screen:', appState.currentScreen);
-    
     switch (appState.currentScreen) {
         case 'welcome':
-            console.log('Already at welcome screen, no navigation needed');
             return;
         case 'mode':
-            console.log('Navigating from mode to welcome');
             showScreen('welcome');
             break;
         case 'key':
-            console.log('Navigating from key to mode');
             showScreen('mode');
             break;
         case 'phrase-type':
             if (appState.mode === 'designate') {
-                console.log('Navigating from phrase-type to key (designate mode)');
                 showScreen('key');
             } else {
-                console.log('Navigating from phrase-type to mode (random mode)');
                 showScreen('mode');
             }
             break;
         case 'chord-type':
-            console.log('Navigating from chord-type to phrase-type');
             showScreen('phrase-type');
-            break;
-        case '25-type':
-            console.log('Navigating from 25-type to phrase-type');
-            showScreen('phrase-type');
-            break;
-        case 'biii-to-ii-type':
-            console.log('Navigating from biii-to-ii-type to phrase-type');
-            showScreen('phrase-type');
-            break;
-        case 'i-dim-to-i-type':
-            console.log('Navigating from i-dim-to-i-type to phrase-type');
-            showScreen('phrase-type');
-            break;
-        case 'tritone-sub-25-type':
-            console.log('Navigating from tritone-sub-25-type to 25-type');
-            showScreen('25-type');
             break;
         case 'length':
             if (appState.phraseType === '7sus4') {
-                console.log('Navigating from length to chord-type (7sus4)');
                 showScreen('chord-type');
             } else {
-                console.log('Navigating from length to phrase-type (non-7sus4)');
                 showScreen('phrase-type');
             }
             break;
         case 'phrase-generator':
             if (appState.phraseType === '7sus4' || appState.phraseType === 'major' || 
-                appState.phraseType === 'major_25' || appState.phraseType === 'minor_25' ||
-                appState.phraseType === 'iv_iv') {
-                console.log('Navigating from phrase-generator to length');
+                appState.phraseType === 'major_25' || appState.phraseType === 'minor_25') {
                 showScreen('length');
-            } else if (appState.phraseType === 'tritone_sub_25_major' || appState.phraseType === 'tritone_sub_25_minor' || appState.phraseType === 'd7_to_db') {
-                console.log('Navigating from phrase-generator to 25-type');
-                showScreen('25-type');
             } else {
-                console.log('Navigating from phrase-generator to phrase-type');
                 showScreen('phrase-type');
             }
-            break;
-        default:
-            console.log('Unknown screen for back navigation:', appState.currentScreen);
             break;
     }
 }
@@ -479,29 +328,9 @@ function updateScreenTitles() {
         document.getElementById('chord-type-title').textContent = 'Choose 7sus4 Chord Type';
     }
 
-    // Update 25-type screen title
-    if (appState.mode === 'designate' && appState.selectedKey) {
-        document.getElementById('25-type-title').textContent = 
-            `Key of ${appState.selectedKey}: Choose 25 Type`;
-    } else if (appState.mode === 'random') {
-        document.getElementById('25-type-title').textContent = 'Random Key: Choose 25 Type';
-    } else {
-        document.getElementById('25-type-title').textContent = 'Choose 25 Type';
-    }
-
-    // Update tritone-sub-25-type screen title
-    if (appState.mode === 'designate' && appState.selectedKey) {
-        document.getElementById('tritone-sub-25-type-title').textContent = 
-            `Key of ${appState.selectedKey}: Choose Tritone-sub 25 Type`;
-    } else if (appState.mode === 'random') {
-        document.getElementById('tritone-sub-25-type-title').textContent = 'Random Key: Choose Tritone-sub 25 Type';
-    } else {
-        document.getElementById('tritone-sub-25-type-title').textContent = 'Choose Tritone-sub 25 Type';
-    }
-
     // Update length screen title
     if (appState.mode === 'designate' && appState.selectedKey) {
-        let phraseTypeDisplay = getChordProgressionDisplayForTitle(appState.phraseType, appState.selectedKey);
+        let phraseTypeDisplay = getPhraseTypeDisplay(appState.phraseType);
         document.getElementById('length-title').textContent = 
             `Key of ${appState.selectedKey}: ${phraseTypeDisplay}`;
     } else if (appState.mode === 'random') {
@@ -518,36 +347,9 @@ function getPhraseTypeDisplay(phraseType) {
         case 'major': return 'Major';
         case 'major_25': return 'Major 25';
         case 'minor_25': return 'Minor 25';
-        case 'side_step_25': return 'Side-step 25';
-        case 'backdoor_25': return 'Backdoor 25';
-        case 'tritone_sub_25_major': return 'Tritone-sub 25 Major';
-        case 'tritone_sub_25_minor': return 'Tritone-sub 25 Minor';
-        case 'd7_to_db': return 'II7 to bII';
-        case 'iv_iv': return 'IV to iv';
-        case 'short_iv_iv': return 'IV to iv';
-        case 'ii7_to_v7': return 'II7 to ii';
-        case 'iii_to_biii': return 'iii to biii°';
-        case 'biii_to_ii_old': return 'vi to II7b9';
-        case 'iv7_to_iv_sharp_dim': return 'IV7 to #iv°';
-        case 'long_iv7_to_iv_sharp_dim': return 'IV7 to #iv°';
-        case 'iv_sharp_half_dim_to_vii7': return '#ivø7 to VII7';
-        case 'long_iv_sharp_half_dim_to_vii7': return '#ivø7 to VII7';
         case '7sus4': return getChordTypeDisplay(appState.chordType);
         default: return phraseType;
     }
-}
-
-function getChordProgressionDisplayForTitle(phraseType, key) {
-    // For phrase types that have specific chord progressions, use them
-    if (phraseType === 'iv7_to_iv_sharp_dim' || phraseType === 'long_iv7_to_iv_sharp_dim') {
-        return getIV7ToIvSharpDimChordProgression(key);
-    } else if (phraseType === 'iv_sharp_half_dim_to_vii7' || phraseType === 'long_iv_sharp_half_dim_to_vii7') {
-        return getIvSharpHalfDimToVii7ChordProgression(key);
-    } else if (phraseType === 'd7_to_db') {
-        return window.KEY_CHORD_MAP["d7_to_db"][key];
-    }
-    // For other phrase types, fall back to the regular display
-    return getPhraseTypeDisplay(phraseType);
 }
 
 function getChordTypeDisplay(chordType) {
@@ -627,9 +429,6 @@ function updatePhraseDisplay() {
     console.log('Current phrase data:', currentPhraseData);
     console.log('Showing partial phrase:', showingPartialPhrase);
     
-    // Reset notation rendered flag
-    notationRendered = false;
-    
     if (!currentPhraseData) {
         console.error('No phrase data available');
         return;
@@ -642,11 +441,11 @@ function updatePhraseDisplay() {
     if (showingPartialPhrase) {
         // Show partial phrase with rests (exactly like Python LilyPond)
         abcNotation = generateABCScore(currentPhraseData.phrase, true, currentPhraseData.phrase.length);
-        buttonText = "Show Full";
+        buttonText = "Show Full Phrase";
     } else {
         // Show full phrase
         abcNotation = generateABCScore(currentPhraseData.phrase, false, currentPhraseData.phrase.length);
-        buttonText = "Generate Next";
+        buttonText = "Generate Next Phrase";
     }
     
     console.log('ABC notation:', abcNotation);
@@ -681,50 +480,20 @@ function renderABCNotation(abcNotation) {
         // Clear previous content
         notationDiv.innerHTML = '';
         
-        // Get current orientation and viewport dimensions
-        const isLandscape = window.orientation === 90 || window.orientation === -90;
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-        
-        // Detect if we're on PC (no orientation property) or mobile
-        const isPC = typeof window.orientation === 'undefined';
-        
-        // Use original working parameters with device detection
-        let staffwidth, scale, padding;
-        if (isPC) {
-            // PC: Use original working parameters
-            staffwidth = 450;
-            scale = 1.0;
-            padding = 40;
-        } else if (isLandscape) {
-            // Mobile landscape: Use original working parameters
-            staffwidth = 450;
-            scale = 1.0;
-            padding = 20;
-        } else {
-            // Mobile portrait: Use original working parameters
-            staffwidth = 400;
-            scale = 1.0;
-            padding = 15;
-        }
-        
-        // Use fixed measures per line like the original version
-        const measuresPerLine = 16;
-        
-        // Render the ABC notation with responsive parameters
+        // Render the ABC notation optimized for iPhone 13 landscape
         ABCJS.renderAbc(notationDiv, abcNotation, {
             responsive: "resize",
-            scale: scale,
-            staffwidth: staffwidth,
-            paddingleft: padding,
-            paddingright: padding,
-            paddingtop: padding,
-            paddingbottom: padding,
+            scale: 1.0,  // Reduced scale for iPhone 13
+            staffwidth: 450,  // Reduced width for iPhone 13 landscape
+            paddingleft: 40,   // Reduced padding
+            paddingright: 40,  // Reduced padding
+            paddingtop: 15,
+            paddingbottom: 15,
             viewportHorizontal: true,
             viewportVertical: true,
             add_classes: true,
             format: {
-                titlefont: "serif 14",
+                titlefont: "serif 14",  // Smaller fonts for iPhone 13
                 gchordfont: "serif 10",
                 vocalfont: "serif 11",
                 annotationfont: "serif 10",
@@ -740,7 +509,7 @@ function renderABCNotation(abcNotation) {
             wrap: {
                 minSpacing: 1.6,
                 maxSpacing: 2.4,
-                preferredMeasuresPerLine: measuresPerLine
+                preferredMeasuresPerLine: 16
             }
         });
         
@@ -831,7 +600,6 @@ function renderABCNotation(abcNotation) {
         }, 100);
         
         console.log('ABC notation rendered successfully');
-        notationRendered = true; // Mark notation as rendered
     } catch (error) {
         console.error('Error rendering ABC notation:', error);
         notationDiv.innerHTML = '<p>Error rendering musical notation</p>';
@@ -940,27 +708,9 @@ function getFinalPhraseType(useRandomCycling = false) {
         return appState.length === 'short' ? 'short_25_major' : 'long_25_major';
     } else if (appState.phraseType === 'minor_25') {
         return appState.length === 'short' ? 'short_25_minor' : 'long_25_minor';
-    } else if (appState.phraseType === 'side_step_25') {
-        return 'long_side_step_25';
-            } else if (appState.phraseType === 'iii_to_biii') {
-            return appState.length === 'short' ? 'iii_to_biii' : 'long_iii_to_biii';
-        } else if (appState.phraseType === 'biii_to_ii_old') {
-            return appState.length === 'short' ? 'biii_to_ii_old' : 'long_biii_to_ii_old';
-    } else if (appState.phraseType === 'backdoor_25') {
-        return appState.length === 'short' ? 'short_backdoor_25' : 'backdoor_25';
-    } else if (appState.phraseType === 'tritone_sub_25_major') {
-        return 'tritone_sub_25_major';
-    } else if (appState.phraseType === 'tritone_sub_25_minor') {
-        return 'tritone_sub_25_minor';
-    } else if (appState.phraseType === 'iv_iv') {
-        return appState.length === 'short' ? 'short_iv_iv' : 'iv_iv';
-            } else if (appState.phraseType === 'iv7_to_iv_sharp_dim') {
-            return appState.length === 'short' ? 'iv7_to_iv_sharp_dim' : 'long_iv7_to_iv_sharp_dim';
-        } else if (appState.phraseType === 'iv_sharp_half_dim_to_vii7') {
-            return appState.length === 'short' ? 'iv_sharp_half_dim_to_vii7' : 'long_iv_sharp_half_dim_to_vii7';
-        } else {
-            return appState.phraseType;
-        }
+    } else {
+        return appState.phraseType;
+    }
 }
 
 function generatePhraseData(phraseType, selectedKey) {
@@ -1030,8 +780,6 @@ function getKeyDisplayText(phraseType, selectedKey, generatedKey) {
         // DESIGNATE MODE - use selected key for display
         if (phraseType.includes("25_major")) {
             return getMajor25ChordProgression(selectedKey);
-        } else if (phraseType.includes("side_step_25")) {
-            return getSideStep25ChordProgression(selectedKey);
         } else if (phraseType.includes("25_minor")) {
             return getMinor25ChordProgression(selectedKey);
         } else if (phraseType === "turnaround") {
@@ -1040,24 +788,6 @@ function getKeyDisplayText(phraseType, selectedKey, generatedKey) {
             return getRhythmChanges56ChordProgression(selectedKey);
         } else if (phraseType === "ii7_to_v7") {
             return getII7ToV7ChordProgression(selectedKey);
-        } else if (phraseType === "iii_to_biii" || phraseType === "long_iii_to_biii") {
-            return getIiiToBiiiChordProgression(selectedKey);
-        } else if (phraseType === "iv7_to_iv_sharp_dim" || phraseType === "long_iv7_to_iv_sharp_dim") {
-            return getIV7ToIvSharpDimChordProgression(selectedKey);
-        } else if (phraseType === "iv_sharp_half_dim_to_vii7" || phraseType === "long_iv_sharp_half_dim_to_vii7") {
-            return getIvSharpHalfDimToVii7ChordProgression(selectedKey);
-        } else if (phraseType === "biii_to_ii_old" || phraseType === "long_biii_to_ii_old") {
-            return getBiiiToIiOldChordProgression(selectedKey);
-        } else if (phraseType === "backdoor_25" || phraseType === "short_backdoor_25") {
-            return window.KEY_CHORD_MAP["backdoor_25"][selectedKey];
-        } else if (phraseType === "tritone_sub_25_major") {
-            return `Tritone-sub 25 Major in the key of ${selectedKey}`;
-        } else if (phraseType === "tritone_sub_25_minor") {
-            return `Tritone-sub 25 Minor in the key of ${selectedKey}`;
-        } else if (phraseType === "d7_to_db") {
-            return window.KEY_CHORD_MAP["d7_to_db"][selectedKey];
-        } else if (phraseType === "iv_iv" || phraseType === "short_iv_iv") {
-            return window.KEY_CHORD_MAP["iv_iv"][selectedKey];
         } else if (phraseType.includes("major")) {
             return `in the key of ${selectedKey}`;
         } else if (phraseType === "7sus4" || phraseType === "long_7sus4") {
@@ -1094,10 +824,6 @@ function getKeyDisplayText(phraseType, selectedKey, generatedKey) {
             // Map the generated key to the correct display key
             const displayKey = mapRandomKeyForDisplay(phraseType, generatedKey);
             return getMajor25ChordProgression(displayKey);
-        } else if (phraseType.includes("side_step_25")) {
-            // Map the generated key to the correct display key
-            const displayKey = mapRandomKeyForDisplay(phraseType, generatedKey);
-            return getSideStep25ChordProgression(displayKey);
         } else if (phraseType.includes("25_minor")) {
             // Map the generated key to the correct display key
             const displayKey = mapRandomKeyForDisplay(phraseType, generatedKey);
@@ -1108,24 +834,6 @@ function getKeyDisplayText(phraseType, selectedKey, generatedKey) {
             return getRhythmChanges56ChordProgression(generatedKey);
         } else if (phraseType === "ii7_to_v7") {
             return getII7ToV7ChordProgression(generatedKey);
-        } else if (phraseType === "iii_to_biii" || phraseType === "long_iii_to_biii") {
-            return getIiiToBiiiChordProgression(generatedKey);
-        } else if (phraseType === "iv7_to_iv_sharp_dim" || phraseType === "long_iv7_to_iv_sharp_dim") {
-            return getIV7ToIvSharpDimChordProgression(generatedKey);
-        } else if (phraseType === "iv_sharp_half_dim_to_vii7" || phraseType === "long_iv_sharp_half_dim_to_vii7") {
-            return getIvSharpHalfDimToVii7ChordProgression(generatedKey);
-        } else if (phraseType === "biii_to_ii_old" || phraseType === "long_biii_to_ii_old") {
-            return getBiiiToIiOldChordProgression(generatedKey);
-        } else if (phraseType === "backdoor_25" || phraseType === "short_backdoor_25") {
-            return window.KEY_CHORD_MAP["backdoor_25"][generatedKey];
-        } else if (phraseType === "tritone_sub_25_major") {
-            return `Tritone-sub 25 Major in the key of ${generatedKey}`;
-        } else if (phraseType === "tritone_sub_25_minor") {
-            return `Tritone-sub 25 Minor in the key of ${generatedKey}`;
-        } else if (phraseType === "d7_to_db") {
-            return window.KEY_CHORD_MAP["d7_to_db"][generatedKey];
-        } else if (phraseType === "iv_iv" || phraseType === "short_iv_iv") {
-            return window.KEY_CHORD_MAP["iv_iv"][generatedKey];
         } else {
             const chordMapKey = phraseType in window.KEY_CHORD_MAP ? phraseType : "major";
             return window.KEY_CHORD_MAP[chordMapKey][generatedKey];
@@ -1175,7 +883,7 @@ function getDominantOrRelativeMajorKey(phraseType, tonicKey) {
     
     const keySemitones = KEYS[tonicKey];
     
-    if (phraseType.includes("25_major") || phraseType.includes("side_step_25")) {
+    if (phraseType.includes("25_major")) {
         // Map to dominant (5th above)
         const dominantSemitones = (keySemitones + 7) % 12;
         for (const [key, semitones] of Object.entries(KEYS)) {
@@ -1223,31 +931,6 @@ function getMajor25ChordProgression(key) {
         return `${iiKey}m ${vKey}7 ${key}`;
     }
     return `in the key of ${key}`;
-}
-
-function getSideStep25ChordProgression(key) {
-    // Side-step 25 progression: biiim bVI7 iim V7 I
-    // Examples: C = "Ebm Ab7 Dm G7 C", F = "Abm Db7 Gm C7 F"
-    
-    const keySemitones = KEYS[key];
-    const biiiSemitones = (keySemitones + 3) % 12;  // 3 semitones up from tonic (biii)
-    const bviSemitones = (keySemitones + 8) % 12;   // 8 semitones up from tonic (bVI)
-    const iiSemitones = (keySemitones + 2) % 12;    // 2 semitones up from tonic (ii)
-    const vSemitones = (keySemitones + 7) % 12;     // 7 semitones up from tonic (V)
-    
-    let biiiKey = null;
-    let bviKey = null;
-    let iiKey = null;
-    let vKey = null;
-    
-    for (const [k, semitones] of Object.entries(KEYS)) {
-        if (semitones === biiiSemitones) biiiKey = k;
-        if (semitones === bviSemitones) bviKey = k;
-        if (semitones === iiSemitones) iiKey = k;
-        if (semitones === vSemitones) vKey = k;
-    }
-    
-    return `${biiiKey}m ${bviKey}7 ${iiKey}m ${vKey}7 ${key}`;
 }
 
 function getMinor25ChordProgression(key) {
@@ -1338,122 +1021,29 @@ function getRhythmChanges56ChordProgression(key) {
     return `in the key of ${key}`;
 }
 
-function getIV7ToIvSharpDimChordProgression(key) {
-    // Calculate IV7 to #iv° progression with resolution targets
-    // IV7 = perfect fourth up from tonic
-    // #iv° = tritone up from tonic  
-    // Resolution targets: C (tonic) and G (dominant)
-    const keySemitones = KEYS[key];
-    const ivSemitones = (keySemitones + 5) % 12;  // 5 semitones up from tonic (perfect fourth)
-    const sharpIvSemitones = (keySemitones + 6) % 12;  // 6 semitones up from tonic (tritone)
-    const dominantSemitones = (keySemitones + 7) % 12;  // 7 semitones up from tonic (dominant)
-    
-    let ivKey = null;
-    let sharpIvKey = null;
-    let dominantKey = null;
-    
-    for (const [k, semitones] of Object.entries(KEYS)) {
-        if (semitones === ivSemitones) ivKey = k;
-        if (semitones === sharpIvSemitones) sharpIvKey = k;
-        if (semitones === dominantSemitones) dominantKey = k;
-    }
-    
-    if (ivKey && sharpIvKey && dominantKey) {
-        return `${ivKey}7 to ${sharpIvKey}° (to ${key}/${dominantKey})`;
-    }
-    return `in the key of ${key}`;
-}
-
-function getIvSharpHalfDimToVii7ChordProgression(key) {
-    // Calculate #ivø7 to VII7 progression with resolution target
-    // #ivø7 = tritone up from tonic (6 semitones) + half-diminished 7th
-    // VII7 = major 7th up from tonic (11 semitones) + dominant 7th
-    // Resolution target: tonic
-    const keySemitones = KEYS[key];
-    const sharpIvSemitones = (keySemitones + 6) % 12;  // 6 semitones up from tonic (tritone)
-    const viiSemitones = (keySemitones + 11) % 12;     // 11 semitones up from tonic (major 7th)
-    
-    let sharpIvKey = null;
-    let viiKey = null;
-    
-    for (const [k, semitones] of Object.entries(KEYS)) {
-        if (semitones === sharpIvSemitones) sharpIvKey = k;
-        if (semitones === viiSemitones) viiKey = k;
-    }
-    
-    if (sharpIvKey && viiKey) {
-        return `${sharpIvKey}ø7 to ${viiKey}7 (to ${key})`;
-    }
-    return `in the key of ${key}`;
-}
-
 function getII7ToV7ChordProgression(key) {
     // Special cases with exact accidentals (from Python)
     if (key === "Gb" || key === "F#") {
-        return "Ab7 - Abm -";
+        return "Ab7 - Db7 -";
     } else if (key === "B") {
-        return "C#7 - C#m -";
+        return "C#7 - F#7 -";
     }
     
-    // For other keys, calculate the chord progression II7 - ii
+    // For other keys, calculate the chord progression ii7 - V7
     const keySemitones = KEYS[key];
     const iiSemitones = (keySemitones + 2) % 12;  // 2 semitones up from tonic
+    const vSemitones = (keySemitones + 7) % 12;   // 7 semitones up from tonic
     
     let iiKey = null;
+    let vKey = null;
     
     for (const [k, semitones] of Object.entries(KEYS)) {
         if (semitones === iiSemitones) iiKey = k;
+        if (semitones === vSemitones) vKey = k;
     }
     
-    if (iiKey) {
-        return `${iiKey}7 - ${iiKey}m -`;
-    }
-    return `in the key of ${key}`;
-}
-
-function getIiiToBiiiChordProgression(key) {
-    // Calculate the chord progression iii - biii°
-    const keySemitones = KEYS[key];
-    const iiiSemitones = (keySemitones + 4) % 12;   // 4 semitones up from tonic
-    const biiiSemitones = (keySemitones + 3) % 12;  // 3 semitones up from tonic
-    
-    let iiiKey = null;
-    let biiiKey = null;
-    
-    for (const [k, semitones] of Object.entries(KEYS)) {
-        if (semitones === iiiSemitones) iiiKey = k;
-        if (semitones === biiiSemitones) biiiKey = k;
-    }
-    
-    if (iiiKey && biiiKey) {
-        return `${iiiKey}m to ${biiiKey}°`;
-    }
-    return `in the key of ${key}`;
-}
-
-function getBiiiToIiOldChordProgression(key) {
-    // Calculate the chord progression vi to II7b9 / iiø7 to V7b9 (to iim)
-    const keySemitones = KEYS[key];
-    const viSemitones = (keySemitones + 9) % 12;  // 9 semitones up from tonic (vi)
-    const iiSemitones = (keySemitones + 2) % 12;  // 2 semitones up from tonic (II)
-    const ivsSemitones = (keySemitones + 6) % 12;   // 6 semitones up from tonic (iv#)
-    const viiSemitones = (keySemitones + 11) % 12;   // 11 semitones up from tonic (VII) - equivalent to 1 semitone down
-
-    
-    let viKey = null;
-    let iiKey = null;
-    let ivsKey = null;
-    let viiKey = null;
-    
-    for (const [k, semitones] of Object.entries(KEYS)) {
-        if (semitones === viSemitones) viKey = k;
-        if (semitones === iiSemitones) iiKey = k;
-        if (semitones === ivsSemitones) ivsKey = k;
-        if (semitones === viiSemitones) viiKey = k;
-    }
-    
-    if (viKey && iiKey && ivsKey && viiKey) {
-        return `${viKey}m to ${iiKey}7b9 / ${ivsKey}ø7 to ${viiKey}7b9 (to ${iiKey}m)`;
+    if (iiKey && vKey) {
+        return `${iiKey}7 - ${vKey}7 -`;
     }
     return `in the key of ${key}`;
 }
@@ -1463,7 +1053,7 @@ function mapRandomKeyForDisplay(phraseType, generatedKey) {
     // Reverse the mapping done in getDominantOrRelativeMajorKey
     const generatedSemitones = KEYS[generatedKey];
     
-    if (phraseType.includes("25_major") || phraseType.includes("side_step_25")) {
+    if (phraseType.includes("25_major")) {
         // Generated key is dominant, find the tonic (5th below)
         const tonicSemitones = (generatedSemitones - 7 + 12) % 12;
         for (const [key, semitones] of Object.entries(KEYS)) {

@@ -6,208 +6,40 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bebop Practice Program</title>
+    <title>Lines & Voicings</title>
     <link rel="stylesheet" href="styles.css?v=11.9">
-    <script src="https://unpkg.com/abcjs@6.4.0/dist/abcjs-basic.js"></script>
+    <style>
+        /* Main page specific styles */
+        .main-nav-btn {
+            text-decoration: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+        }
+        
+        .main-nav-btn:hover {
+            text-decoration: none !important;
+        }
+        
+        .main-nav-btn:visited {
+            text-decoration: none !important;
+        }
+        
+        .main-nav-btn:link {
+            text-decoration: none !important;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="screen">
-            <h1 class="title">Bebop Practice Program</h1>
+            <h1 class="title">Lines & Voicings</h1>
             <div class="welcome-grid">
-                <button id="username-btn" class="login-input-btn">Username</button>
-                <button id="password-btn" class="login-input-btn">Password</button>
-                <button id="login-btn" class="nav-btn">Login</button>
+                <a href="lines.html" class="nav-btn main-nav-btn">Lines</a>
+                <a href="Chord Practice Program/index.html" class="nav-btn main-nav-btn">Voicings</a>
             </div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mode Selection Screen -->
-        <div id="mode-screen" class="screen hidden">
-            <h2 class="screen-title">Choose Mode</h2>
-            <div class="mode-grid">
-                <button id="random-btn" class="nav-btn">Random</button>
-                <button id="designate-btn" class="nav-btn">Designate</button>
-            </div>
-            <div class="return-arrow" id="mode-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Key Selection Screen -->
-        <div id="key-screen" class="screen hidden">
-            <h2 class="screen-title">Choose Key</h2>
-            <div class="key-grid">
-                <button class="key-btn nav-btn" data-key="C">C</button>
-                <button class="key-btn nav-btn" data-key="F">F</button>
-                <button class="key-btn nav-btn" data-key="Bb">Bb</button>
-                <button class="key-btn nav-btn" data-key="Eb">Eb</button>
-                <button class="key-btn nav-btn" data-key="Ab">Ab</button>
-                <button class="key-btn nav-btn" data-key="Db">Db</button>
-                <button class="key-btn nav-btn" data-key="F#">F#</button>
-                <button class="key-btn nav-btn" data-key="B">B</button>
-                <button class="key-btn nav-btn" data-key="E">E</button>
-                <button class="key-btn nav-btn" data-key="A">A</button>
-                <button class="key-btn nav-btn" data-key="D">D</button>
-                <button class="key-btn nav-btn" data-key="G">G</button>
-            </div>
-            <div class="return-arrow" id="key-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Phrase Type Selection Screen -->
-        <div id="phrase-type-screen" class="screen hidden">
-            <h2 class="screen-title" id="phrase-type-title">Choose Phrase Type</h2>
-            <div class="phrase-type-grid">
-                <button id="7sus4-btn" class="nav-btn">7sus4</button>
-                <button id="major-btn" class="nav-btn">Major</button>
-                <button id="25s-btn" class="nav-btn">25s</button>
-                <button id="iv-iv-btn" class="nav-btn">IV to iv</button>
-                <button id="turnaround-btn" class="nav-btn">Turnaround</button>
-                <button id="rhythm-changes-btn" class="nav-btn">Rhythm Changes 5-6</button>
-                <button id="ii7-v7-btn" class="nav-btn">II7 to ii</button>
-                <button id="biii-to-ii-btn" class="nav-btn">biii° to ii</button>
-                <button id="i-dim-to-i-btn" class="nav-btn">i° to I</button>
-            </div>
-            <div class="return-arrow" id="phrase-type-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7sus4 Chord Type Selection Screen -->
-        <div id="chord-type-screen" class="screen hidden">
-            <h2 class="screen-title" id="chord-type-title">Choose 7sus4 Chord Type</h2>
-            <div class="chord-type-grid">
-                <button id="minor-chord-btn" class="nav-btn">Minor</button>
-                <button id="dominant-chord-btn" class="nav-btn">Dominant</button>
-                <button id="half-dim-chord-btn" class="nav-btn">ø7</button>
-                <button id="altered-chord-btn" class="nav-btn">Altered</button>
-                <button id="random-chord-btn" class="nav-btn">Random</button>
-            </div>
-            <div class="return-arrow" id="chord-type-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 25 Type Selection Screen -->
-        <div id="25-type-screen" class="screen hidden">
-            <h2 class="screen-title" id="25-type-title">Choose 25 Type</h2>
-                            <div class="twentyfive-type-grid">
-                    <button id="major-25-btn" class="nav-btn">Major 25</button>
-                    <button id="minor-25-btn" class="nav-btn">Minor 25</button>
-                    <button id="side-step-25-btn" class="nav-btn">Side-step 25</button>
-                    <button id="backdoor-25-btn" class="nav-btn">Backdoor 25</button>
-                    <button id="tritone-sub-25-btn" class="nav-btn">Tritone-sub 25</button>
-                </div>
-            <div class="return-arrow" id="25-type-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tritone-sub 25 Type Selection Screen -->
-        <div id="tritone-sub-25-type-screen" class="screen hidden">
-            <h2 class="screen-title" id="tritone-sub-25-type-title">Choose Tritone-sub 25 Type</h2>
-            <div class="tritone-sub-25-type-grid">
-                <button id="tritone-sub-25-major-btn" class="nav-btn">Major</button>
-                <button id="tritone-sub-25-minor-btn" class="nav-btn">Minor</button>
-                <button id="d7-to-db-btn" class="nav-btn">II7 to bII</button>
-            </div>
-            <div class="return-arrow" id="tritone-sub-25-type-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- biii° to ii Type Selection Screen -->
-        <div id="biii-to-ii-type-screen" class="screen hidden">
-            <h2 class="screen-title" id="biii-to-ii-type-title">Choose biii° to ii Type</h2>
-            <div class="biii-type-grid">
-                <button id="iii-to-biii-btn" class="nav-btn">iii to biii°</button>
-                <button id="vi-to-ii7b9-btn" class="nav-btn">vi to II7b9</button>
-            </div>
-            <div class="return-arrow" id="biii-to-ii-type-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- i° to I Type Selection Screen -->
-        <div id="i-dim-to-i-type-screen" class="screen hidden">
-            <h2 class="screen-title" id="i-dim-to-i-type-title">Choose i° to I Type</h2>
-            <div class="i-dim-type-grid">
-                <button id="iv7-to-iv-sharp-dim-btn" class="nav-btn">IV7 to #iv°</button>
-                <button id="iv-sharp-half-dim-to-vii7-btn" class="nav-btn">#ivø7 to VII7</button>
-            </div>
-            <div class="return-arrow" id="i-dim-to-i-type-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Length Selection Screen -->
-        <div id="length-screen" class="screen hidden">
-            <h2 class="screen-title" id="length-title">Choose Length</h2>
-            <div class="length-grid">
-                <button id="short-btn" class="nav-btn">Short</button>
-                <button id="long-btn" class="nav-btn">Long</button>
-            </div>
-            <div class="return-arrow" id="length-return"><span class="triangle-left"></span></div>
-            <div class="footer">
-                <div class="attribution">
-                    <p>Made by tsy</p>
-                    <p>Contact: tungsyauy@gmail.com</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Phrase Generator Screen -->
-        <div id="phrase-generator-screen" class="screen hidden">
-            <div class="music-display">
-                <div id="notation" class="notation-container"></div>
-                <div id="key-display" class="key-display"></div>
-            </div>
-            
-            <div class="controls">
-                <button id="toggle-phrase-btn" class="action-btn">Show Full</button>
-            </div>
-            
-            <div class="return-arrow" id="phrase-generator-return"><span class="triangle-left"></span></div>
             <div class="footer">
                 <div class="attribution">
                     <p>Made by tsy</p>
@@ -216,93 +48,5 @@
             </div>
         </div>
     </div>
-    
-    <script src="data.js?v=1.5"></script>
-    <script src="music-utils.js?v=1.2"></script>
-    <script src="phrase-generator.js?v=2.2"></script>
-    <script src="app.js?v=1.7"></script>
-    
-    <!-- Test script to verify arrays are loaded correctly -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('=== CELL ARRAY VERIFICATION ===');
-            console.log('BASE_MINOR_B_CELLS length:', BASE_MINOR_B_CELLS.length);
-            console.log('BASE_MINOR_C_CELLS length:', BASE_MINOR_C_CELLS.length);
-            console.log('MINOR_B_CELLS length:', MINOR_B_CELLS.length);
-            console.log('MINOR_C_CELLS length:', MINOR_C_CELLS.length);
-            
-            // Check if the new cells are present
-            console.log('Checking for transposed BASE_CELLS in BASE_MINOR_B_CELLS:');
-            // These are some examples of BASE_CELLS transposed down a perfect fourth (-5 semitones)
-            const transposedBaseCells = [
-                ["F4", "A3", "C4", "C#4", "E4"],  // ["Bb4", "D4", "F4", "F#4", "A4"] transposed down 5
-                ["A3", "C4", "D4", "A3", "F3"],   // ["D4", "F4", "E4", "D4", "C4"] transposed down 5
-                ["E4", "D4", "C4", "D4", "F4"],   // ["A4", "G4", "F#4", "G4", "C5"] transposed down 5
-                ["A3", "D4", "F4", "A4", "F3"],   // ["E4", "G4", "Bb4", "D5", "C5"] transposed down 5
-                ["F4", "E3", "F3", "E4", "D4"]    // ["C5", "B4", "Bb4", "A4", "G4"] transposed down 5
-            ];
-            
-            transposedBaseCells.forEach((cell, index) => {
-                const found = BASE_MINOR_B_CELLS.some(baseCell => 
-                    JSON.stringify(baseCell) === JSON.stringify(cell)
-                );
-                console.log(`Transposed BASE_CELL ${index + 1}: ${JSON.stringify(cell)} - ${found ? 'FOUND' : 'NOT FOUND'}`);
-            });
-            
-            // Check the total count (after filtering out cells starting with 'A')
-            console.log(`BASE_MINOR_B_CELLS should have ${BASE_MINOR_B_CELLS_ORIGINAL.length + BASE_CELLS.length} cells before filtering`);
-            console.log(`Actual BASE_MINOR_B_CELLS count: ${BASE_MINOR_B_CELLS.length}`);
-            console.log(`MINOR_B_CELLS count: ${MINOR_B_CELLS.length}`);
-            
-            // Check that no cells start with 'A'
-            const cellsStartingWithA = BASE_MINOR_B_CELLS.filter(cell => cell[0].startsWith('A'));
-            console.log(`Cells starting with 'A': ${cellsStartingWithA.length} (should be 0)`);
-            if (cellsStartingWithA.length === 0) {
-                console.log('✅ No cells starting with "A" found - filtering successful!');
-            } else {
-                console.log('❌ Found cells starting with "A" - filtering failed!');
-                console.log('Cells starting with "A":', cellsStartingWithA);
-            }
-            
-            console.log('Checking for new cells in BASE_MINOR_C_CELLS:');
-            const newCCells = [
-                ["E5","C5","G#4","E4","B4"],
-                ["E5","C5","G#4","F4","E4"],
-                ["E5","A#4","B4","D5","C5"],
-                ["D4", "C4", "G#3", "E3", "B3"],
-                ["D4", "C4", "G#3", "F3", "E3"]
-            ];
-            
-            newCCells.forEach((cell, index) => {
-                const found = BASE_MINOR_C_CELLS.some(baseCell => 
-                    JSON.stringify(baseCell) === JSON.stringify(cell)
-                );
-                console.log(`New C cell ${index + 1}: ${JSON.stringify(cell)} - ${found ? 'FOUND' : 'NOT FOUND'}`);
-            });
-            
-            console.log('=== END VERIFICATION ===');
-            
-            // Test rhythm changes 5-6 phrase constraint
-            console.log('=== TESTING RHYTHM CHANGES 5-6 PHRASE CONSTRAINT ===');
-            try {
-                const testPhrase = generatePhrase("rhythm_changes_56", "C");
-                console.log('Generated rhythm changes 5-6 phrase:', testPhrase);
-                
-                // Check the fourth cell (index 0, since phrase is built from right to left)
-                const fourthCell = testPhrase.slice(0, 5); // First 5 notes form the fourth cell
-                const fourthCellFirstNote = fourthCell[0].slice(0, -1); // Remove octave
-                console.log('Fourth cell:', fourthCell);
-                console.log('Fourth cell first note:', fourthCellFirstNote);
-                
-                if (['E', 'G', 'D'].includes(fourthCellFirstNote)) {
-                    console.log('✅ Fourth cell starts with allowed note:', fourthCellFirstNote);
-                } else {
-                    console.log('❌ Fourth cell starts with disallowed note:', fourthCellFirstNote);
-                }
-            } catch (error) {
-                console.log('Error generating rhythm changes 5-6 phrase:', error.message);
-            }
-        });
-    </script>
 </body>
-</html> 
+</html>

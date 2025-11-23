@@ -1,0 +1,64 @@
+=== MAJOR_CELLS_down4 CELLS ===
+These are the C major cells transposed down 4 semitones:
+
+Generating MAJOR_CELLS_down4 using exact same logic as the program...
+Total cells: 34
+
+Cell 1: [Eb4, F4, G4, Bb4, Ab4]
+Cell 2: [C4, Eb4, G4, Bb4, Ab4]
+Cell 3: [C4, Eb4, G4, Bb4, G4]
+Cell 4: [G4, Ab4, Bb4, A4, Ab4]
+Cell 5: [C5, Gb4, G4, Bb4, Ab4]
+Cell 6: [Ab4, G4, F4, E4, Eb4]
+Cell 7: [Ab3, Bb3, C4, Eb4, G4]
+Cell 8: [Ab4, C4, Eb4, G4, F4]
+Cell 9: [G4, F4, Eb4, Db4, C4]
+Cell 10: [Bb3, Ab3, G3, Ab3, C4]
+Cell 11: [C4, Eb4, F4, G4, Bb4]
+Cell 12: [Bb4, Ab4, G4, F4, Eb4]
+Cell 13: [C4, Eb4, G4, F4, Eb4]
+Cell 14: [G4, F4, E4, D4, Eb4]
+Cell 15: [Eb4, Db4, C4, Bb3, G3]
+Cell 16: [Eb4, C4, Bb3, Ab3, G3]
+Cell 17: [Eb4, C4, G3, Eb3, F3]
+Cell 18: [G3, Ab3, C4, Eb4, G4]
+Cell 19: [Bb4, Ab4, C4, Eb4, G4]
+Cell 20: [C5, Bb4, Gb4, G4, Bb4]
+Cell 21: [G4, F4, Eb4, C4, Bb3]
+Cell 22: [Bb4, A4, Ab4, C5, G4]
+Cell 23: [Ab4, C4, Eb4, G4, F4]
+Cell 24: [F4, Eb4, E4, D4, Eb4]
+Cell 25: [F4, E4, Eb4, Db4, C4]
+Cell 26: [F4, Eb4, Ab3, Db4, C4]
+Cell 27: [Eb4, G3, Ab3, Db4, C4]
+Cell 28: [Eb4, Db4, Bb3, B3, C4]
+Cell 29: [G4, Ab4, E4, G4, F4]
+Cell 30: [C4, Ab3, G3, F3, Bb3]
+Cell 31: [Ab4, C4, B3, C4, G4]
+Cell 32: [F4, Ab4, G4, F4, Eb4]
+Cell 33: [Ab4, Eb4, E4, G4, F4]
+Cell 34: [G4, Ab4, Eb4, C4, F4]
+
+=== END OF MAJOR_CELLS_down4 ===
+
+=== CELL ANALYSIS ===
+Cells starting with each note:
+  Eb: 6 cells
+  C: 7 cells
+  G: 7 cells
+  Ab: 6 cells
+  Bb: 4 cells
+  F: 4 cells
+
+Cells ending with each note:
+  Ab: 4 cells
+  G: 8 cells
+  Eb: 6 cells
+  F: 6 cells
+  C: 6 cells
+  Bb: 4 cells
+
+=== END ANALYSIS ===
+
+MAJOR_CELLS_down4 not available in browser environment
+Run this in the browser console after loading the web application

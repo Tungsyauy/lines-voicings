@@ -59,12 +59,16 @@ body {
 }
 
 .container {
-    /* Container without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0;
+    /* Glassmorphism container with backdrop blur */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    padding: 30px;
     /* Responsive sizing with max/min constraints */
     width: min(90vw, 1200px);
     height: min(90vh, 600px);
@@ -104,7 +108,11 @@ body {
     text-align: center;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
-    font-family: inherit;
+    /* Glassmorphism text effect */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .screen-title {
@@ -115,7 +123,11 @@ body {
     text-align: center;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.5px;
-    font-family: inherit;
+    /* Glassmorphism text effect */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Specific spacing for mode selection */
@@ -123,12 +135,14 @@ body {
     margin-bottom: clamp(45px, 8vh, 60px) !important;
 }
 
-/* Button Styling - Without Glassmorphism */
+/* Button Styling - Glassmorphism Design */
 .nav-btn {
-    /* Button without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
+    /* Glassmorphism button with backdrop blur */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
     padding: clamp(8px, 1.5vh, 12px) clamp(16px, 2.5vw, 20px);
     font-size: clamp(14px, 2vw, 16px);
     font-weight: 600;
@@ -139,7 +153,9 @@ body {
     min-width: clamp(140px, 18vw, 160px);
     min-height: clamp(40px, 5vh, 44px);
     max-width: clamp(160px, 20vw, 180px);
-    box-shadow: none;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.5px;
     position: relative;
@@ -158,10 +174,12 @@ body {
 }
 
 .nav-btn:hover {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 .nav-btn:hover::before {
@@ -169,17 +187,21 @@ body {
 }
 
 .nav-btn:active {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
 }
 
 .login-input-btn {
-    /* Input button without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
+    /* Glassmorphism input button with different styling */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
     padding: clamp(8px, 1.5vh, 12px) clamp(16px, 2.5vw, 20px);
     font-size: clamp(14px, 2vw, 16px);
     font-weight: 600;
@@ -190,7 +212,9 @@ body {
     min-width: clamp(140px, 18vw, 160px);
     min-height: clamp(40px, 5vh, 44px);
     max-width: clamp(160px, 20vw, 180px);
-    box-shadow: none;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.5px;
     position: relative;
@@ -209,10 +233,12 @@ body {
 }
 
 .login-input-btn:hover {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
 }
 
 .login-input-btn:hover::before {
@@ -220,10 +246,12 @@ body {
 }
 
 .login-input-btn:active {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(0);
 }
 
 .button-container {
@@ -284,15 +312,19 @@ body {
     min-height: clamp(36px, 5vh, 40px);
     font-size: clamp(12px, 1.5vw, 14px);
     padding: clamp(6px, 1vh, 8px) clamp(10px, 1.5vw, 14px);
-    /* Key button without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
+    /* Glassmorphism key button */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.95);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: none;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
@@ -310,10 +342,12 @@ body {
 }
 
 .key-btn:hover {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 .key-btn:hover::before {
@@ -321,10 +355,12 @@ body {
 }
 
 .key-btn:active {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
 }
 
 .phrase-type-grid {
@@ -419,18 +455,6 @@ body {
     align-items: center;
 }
 
-.tritone-sub-25-type-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(16px, 2.5vw, 20px);
-    max-width: min(90%, 480px);
-    width: min(90%, 480px);
-    margin: 0 auto clamp(20px, 3vh, 25px) auto;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-}
-
 .biii-type-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -456,27 +480,30 @@ body {
 }
 
 .return-arrow {
-    position: fixed;
-    bottom: clamp(30px, 4vh, 40px);
-    right: clamp(30px, 4vw, 40px);
+    position: absolute;
+    bottom: clamp(10px, 1.5vh, 15px);
+    right: clamp(10px, 1.5vw, 15px);
     width: clamp(28px, 4vw, 32px);
     height: clamp(28px, 4vw, 32px);
-    /* Return arrow without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
+    /* Glassmorphism return arrow */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: none;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     /* Prevent zoom/scaling on touch */
     touch-action: manipulation;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
-    z-index: 1000;
 }
 
 .triangle-left {
@@ -490,40 +517,28 @@ body {
 }
 
 .return-arrow:hover {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
 }
 
 .return-arrow:active {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
-}
-
-.return-arrow a {
-    color: inherit;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
-
-.return-arrow a:hover {
-    color: inherit;
-    text-decoration: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
 }
 
 .footer {
-    position: fixed;
-    bottom: clamp(30px, 4vh, 40px);
-    left: clamp(30px, 4vw, 40px);
+    position: absolute;
+    bottom: clamp(10px, 1.5vh, 15px);
+    left: clamp(10px, 1.5vw, 15px);
     text-align: left;
-    z-index: 1000;
 }
 
 .attribution {
@@ -541,7 +556,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding: 0;
+    padding: clamp(10px, 1.5vh, 15px);
     position: relative;
 }
 
@@ -560,20 +575,22 @@ body {
 }
 
 .notation-container {
-    /* Notation container without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    padding: clamp(4px, 0.8vh, 6px);
-    margin-bottom: clamp(6px, 1vh, 8px);
-    min-height: clamp(180px, 32vh, 260px);
-    max-height: clamp(260px, 38vh, 320px);
+    /* Glassmorphism notation container */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: clamp(8px, 1.5vh, 12px);
+    margin-bottom: clamp(8px, 1.5vh, 12px);
+    min-height: clamp(80px, 15vh, 100px);
+    max-height: clamp(100px, 20vh, 130px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: min(98%, 1200px);
+    max-width: min(90%, 700px);
     /* CENTERED BOTH HORIZONTALLY AND VERTICALLY */
     position: relative;
     /* Comprehensive scaling prevention */
@@ -584,174 +601,22 @@ body {
     -webkit-user-zoom: fixed;
     -moz-user-zoom: fixed;
     user-zoom: fixed;
-    overflow: visible;
+    overflow: hidden;
     /* Additional iPhone specific fixes */
     -webkit-text-size-adjust: none;
     -ms-text-size-adjust: none;
     text-size-adjust: none;
-    box-shadow: none;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     /* Orientation change stability */
     transition: none;
     transform: none;
     will-change: auto;
 }
 
-/* Mobile-specific overrides to revert to original layout */
-@media screen and (max-width: 768px) {
-    .container {
-        /* Glassmorphism container with backdrop blur - REMOVED GLASSMORPHISM ONLY */
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        padding: 30px;
-    }
-    
-    #phrase-generator-screen {
-        padding: clamp(10px, 1.5vh, 15px);
-    }
-    
-    .notation-container {
-        /* Glassmorphism notation container - REMOVED GLASSMORPHISM ONLY */
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border: none;
-        border-radius: 0;
-        padding: clamp(8px, 1.5vh, 12px);
-        margin-bottom: clamp(8px, 1.5vh, 12px);
-        min-height: clamp(80px, 15vh, 100px);
-        max-height: clamp(100px, 20vh, 130px);
-        max-width: min(90%, 700px);
-        box-shadow: none;
-    }
-    
-    .controls {
-        position: absolute;
-        bottom: clamp(15px, 2vh, 20px);
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: auto;
-        /* Glassmorphism controls container - REMOVED GLASSMORPHISM ONLY */
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-    }
-    
-    .footer {
-        position: absolute;
-        bottom: clamp(10px, 1.5vh, 15px);
-        left: clamp(10px, 1.5vw, 15px);
-        z-index: auto;
-    }
-    
-    .return-arrow {
-        position: absolute;
-        bottom: clamp(10px, 1.5vh, 15px);
-        right: clamp(10px, 1.5vw, 15px);
-        z-index: auto;
-        /* Glassmorphism return arrow - REMOVED GLASSMORPHISM ONLY */
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-    }
-    
-    .key-display {
-        margin-bottom: clamp(6px, 1vh, 10px);
-    }
-    
-    .action-btn {
-        /* Glassmorphism action button - REMOVED GLASSMORPHISM ONLY */
-        background: transparent;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-    }
-    
-    .action-btn:hover {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        transform: none;
-    }
-    
-    .action-btn:active {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        transform: none;
-    }
-    
-    .return-arrow:hover {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        transform: none;
-    }
-    
-    .return-arrow:active {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        transform: none;
-    }
-    
-    /* Landscape Mode Override - Ensure proper button spacing */
-    @media screen and (orientation: landscape) {
-        .notation-container {
-            min-height: clamp(80px, 15vh, 120px);
-            max-height: clamp(120px, 20vh, 160px);
-            transform: translateY(-35px);
-        }
-        
-        .notation-container .abcjs-container {
-            min-height: clamp(60px, 12vh, 100px);
-        }
-        
-        /* Move key display text closer to staff picture in landscape mode */
-        .key-display {
-            margin-bottom: 0;
-            margin-top: -20px;
-            position: relative;
-            top: -10px;
-        }
-        
-        /* Move button downward in landscape mode to create more space from staff */
-        .controls {
-            bottom: clamp(0px, 0vh, 5px);
-        }
-    }
-    
-    @media screen and (orientation: portrait) {
-        .notation-container {
-            min-height: clamp(80px, 15vh, 100px);
-            max-height: clamp(100px, 20vh, 130px);
-        }
-        
-        .notation-container .abcjs-container {
-            min-height: clamp(50px, 10vh, 70px);
-        }
-        
-        /* Move button up a little in portrait mode to avoid clashing with email */
-        .controls {
-            bottom: clamp(35px, 4vh, 45px);
-        }
-    }
-}
-
 .notation-container svg {
-    max-width: none;
-    width: auto;
+    max-width: 100%;
     height: auto;
     margin: 0 auto;
     /* Prevent scaling on touch/click */
@@ -768,7 +633,7 @@ body {
     font-size: clamp(12px, 2vw, 14px);
     font-weight: 600;
     color: rgba(255, 255, 255, 0.95);
-    margin-bottom: clamp(60px, 8vh, 80px);
+    margin-bottom: clamp(6px, 1vh, 10px);
     text-align: center;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.5px;
@@ -780,25 +645,30 @@ body {
     align-items: center;
     gap: clamp(10px, 2vw, 15px);
     margin-top: clamp(10px, 2vh, 15px);
-    position: fixed;
-    bottom: clamp(60px, 8vh, 80px);
+    position: absolute;
+    bottom: clamp(15px, 2vh, 20px);
     left: 50%;
     transform: translateX(-50%);
     width: auto;
     padding: clamp(8px, 1.5vh, 10px);
-    /* Controls container without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    z-index: 1000;
+    /* Glassmorphism controls container */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .action-btn {
-    /* Action button without glassmorphism background */
-    background: transparent;
-    border: none;
-    border-radius: 0;
+    /* Glassmorphism action button */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
     padding: clamp(8px, 1.5vh, 12px) clamp(16px, 2.5vw, 20px);
     font-size: clamp(12px, 1.5vw, 14px);
     font-weight: 600;
@@ -807,7 +677,9 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     min-width: clamp(140px, 18vw, 160px);
     min-height: clamp(40px, 5vh, 44px);
-    box-shadow: none;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.5px;
     position: relative;
@@ -826,10 +698,12 @@ body {
 }
 
 .action-btn:hover {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 .action-btn:hover::before {
@@ -837,10 +711,12 @@ body {
 }
 
 .action-btn:active {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    transform: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
 }
 
 .hidden {
@@ -877,14 +753,16 @@ body {
 .action-btn:disabled, .nav-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.5);
-    box-shadow: none;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn:disabled:hover, .nav-btn:disabled:hover {
     transform: none;
-    box-shadow: none;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .abcjs-inline-audio {
@@ -897,7 +775,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: clamp(140px, 28vh, 200px);
+    min-height: clamp(50px, 10vh, 70px);
     /* Prevent scaling on touch/click */
     touch-action: manipulation;
     -webkit-touch-callout: none;
@@ -916,8 +794,7 @@ body {
 }
 
 .notation-container .abcjs-container svg {
-    max-width: none;
-    width: auto;
+    max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -927,7 +804,7 @@ body {
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     pointer-events: none;
-    /* Make notation white */
+    /* Make notation white for glassmorphism background */
     filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
@@ -965,7 +842,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: clamp(140px, 28vh, 200px);
+    min-height: clamp(50px, 10vh, 70px);
     position: relative;
     /* Prevent scaling on touch/click */
     touch-action: manipulation;
@@ -994,19 +871,23 @@ body {
 }
 
 .error-message {
-    /* Error message without glassmorphism background */
-    background: transparent;
+    /* Glassmorphism error message */
+    background: rgba(255, 107, 107, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     color: rgba(255, 255, 255, 0.95);
     padding: clamp(6px, 1vh, 8px) clamp(8px, 1.5vw, 12px);
-    border-radius: 0;
-    border: none;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 107, 0.3);
     margin: clamp(6px, 1vh, 10px) 0;
     font-size: clamp(10px, 1.5vw, 12px);
     text-align: center;
     animation: fadeIn 0.3s ease-in;
     max-width: 100%;
     box-sizing: border-box;
-    box-shadow: none;
+    box-shadow: 
+        0 4px 15px rgba(255, 107, 107, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     font-weight: 600;
 }
@@ -1121,7 +1002,7 @@ body {
     .notation-container {
         min-height: clamp(80px, 15vh, 120px);
         max-height: clamp(120px, 20vh, 160px);
-        transform: translateY(-50px);
+        transform: translateY(-35px);
     }
     
     .notation-container .abcjs-container {
@@ -1129,8 +1010,7 @@ body {
     }
     
     .notation-container .abcjs-container svg {
-        max-width: none;
-        width: auto;
+        max-width: 100%;
         height: auto;
         transform: none;
         transition: none;
@@ -1139,14 +1019,9 @@ body {
     /* Move key display text closer to staff picture in landscape mode */
     .key-display {
         margin-bottom: 0;
-        margin-top: -35px;
+        margin-top: -20px;
         position: relative;
-        top: -25px;
-    }
-    
-    /* Move button upward in landscape mode */
-    .controls {
-        bottom: clamp(15px, 2vh, 20px);
+        top: -10px;
     }
 }
 
@@ -1161,8 +1036,7 @@ body {
     }
     
     .notation-container .abcjs-container svg {
-        max-width: none;
-        width: auto;
+        max-width: 100%;
         height: auto;
         transform: none;
         transition: none;
@@ -1217,39 +1091,6 @@ body {
         align-items: center !important;
     }
     
-    /* Portrait mode 25 type grid - vertical layout */
-    .twentyfive-type-grid {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: clamp(16px, 2.5vw, 20px) !important;
-        max-width: min(90%, 480px) !important;
-        width: min(90%, 480px) !important;
-        margin: 0 auto clamp(20px, 3vh, 25px) auto !important;
-        justify-content: center !important;
-        justify-items: center !important;
-        align-items: center !important;
-    }
-    
-    /* Move all page grids upward in landscape mode (except phrase generator) */
-    @media screen and (orientation: landscape) and (max-width: 768px) {
-        .welcome-grid,
-        .mode-grid,
-        .key-grid,
-        .phrase-type-grid,
-        .chord-type-grid,
-        .twentyfive-type-grid,
-        .biii-type-grid,
-        .i-dim-type-grid,
-        .length-grid {
-            margin-top: -80px !important;
-        }
-        
-        /* Move screen titles upward in landscape mode */
-        .screen-title {
-            margin-top: -75px !important;
-        }
-    }
-    
     /* Portrait mode chord type buttons - vertical layout */
     #altered-chord-btn {
         grid-column: 1 !important;
@@ -1265,16 +1106,6 @@ body {
         justify-self: center !important;
         min-width: clamp(130px, 16vw, 150px) !important;
         max-width: clamp(150px, 18vw, 170px) !important;
-    }
-}
-
-/* Landscape mode override for 25 type grid - 2x2 layout */
-@media screen and (orientation: landscape) and (max-width: 768px) {
-    .twentyfive-type-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: clamp(12px, 2vw, 16px) !important;
-        max-width: min(90%, 520px) !important;
-        width: min(90%, 520px) !important;
     }
 }
 
@@ -1303,18 +1134,9 @@ body {
 .notation-container .abcjs-container svg {
     width: auto !important;
     height: auto !important;
-    max-width: none !important;
+    max-width: 100% !important;
     max-height: none !important;
     transform: none !important;
     transition: none !important;
     will-change: auto !important;
-} 
-
-/* Keyboard hint styling */
-.keyboard-hint {
-    font-size: 0.8em;
-    color: #888;
-    margin-top: 5px;
-    font-style: italic;
-    opacity: 0.8;
 } 

@@ -1,110 +1,89 @@
-# Bebop Practice Program
+# Lines & Voicings
+
+A unified music practice suite combining bebop line practice and chord voicing practice in one seamless application.
 
 ## Overview
-The Bebop Practice Program is an interactive web application designed to help jazz musicians practice bebop phrases across various chord progressions and keys. It generates musical phrases based on user-selected parameters and displays them in standard music notation. The program is particularly useful for jazz improvisers looking to expand their vocabulary of bebop lines.
+
+Lines & Voicings is an interactive web application designed to help jazz musicians practice both bebop lines and chord voicings. The application consists of two integrated programs:
+
+- **Lines**: Bebop Practice Program - Practice bebop phrases across various chord progressions and keys
+- **Voicings**: Chord Practice Program - Practice dominant 7th chord voicings and variations
+
+## Features
+
+### Lines Program
+- **Practice Modes**: Random or Designate key selection
+- **Multiple Phrase Types**: 7sus4, Major, 25s, IV to iv, Turnaround, Rhythm Changes, and more
+- **Progressive Reveal**: Learn phrases by first seeing partial phrases, then revealing the full phrase
+- **Responsive Design**: Optimized for both mobile and desktop
+
+### Voicings Program
+- **Chord Types**: X7, X7sus4, X7#11, X7b13#9, X7b9, and Random
+- **Audio Playback**: Listen to chord voicings before seeing them
+- **Visual Notation**: See chord voicings in standard music notation
+- **Interactive Learning**: Generate, listen, and practice chord voicings
 
 ## Installation and Setup
 
 ### Running Locally
+
 1. Clone or download this repository to your local machine
 2. Navigate to the project directory
-3. You can run the application using any local web server. For example:
-   - Using Python:
-     ```
-     python -m http.server 8000
-     ```
-   - Using Node.js (with http-server installed):
-     ```
-     npx http-server
-     ```
-4. Open your browser and navigate to `http://localhost:8000` (or the appropriate port)
+3. Run the included Python server:
+   ```bash
+   python3 server.py
+   ```
+   The server will start on port 8004 by default
+4. Open your browser and navigate to `http://localhost:8004`
+
+### Alternative: Using Python's Built-in Server
+
+```bash
+python3 -m http.server 8004
+```
 
 ### Requirements
+- Python 3.x (for the server)
 - Modern web browser with JavaScript enabled
-- No additional dependencies needed (all libraries are included)
+- No additional dependencies needed (all libraries are included via CDN)
 
-## Features
+## Project Structure
 
-### Practice Modes
-- **Random Mode**: Generates phrases in randomly cycling keys
-- **Designate Mode**: Allows selection of a specific key for practice
-
-### Phrase Types
-The application supports multiple phrase types and chord progressions:
-
-- **7sus4**: Phrases over 7sus4 chords with options for:
-  - Minor
-  - Dominant
-  - Half-diminished (ø7)
-  - Altered
-  - Random (cycles through different chord types)
-
-- **Major**: Phrases in major keys
-
-- **25 Progressions**: Various ii-V-I and related progressions
-  - Major 25 (ii-V-I)
-  - Minor 25 (iiø7-V7-i)
-  - Backdoor 25 (IV-bVII7-I)
-  - Tritone Substitution 25 (both major and minor variants)
-  - II7 to bII (tritone substitution)
-
-- **Other Common Jazz Progressions**:
-  - IV to iv (major to minor subdominant)
-  - Turnaround progressions (I-VI7-ii-V7)
-  - Rhythm Changes bars 5-6 (I7-IV7-#IVdim)
-  - II7 to ii (secondary dominant resolution)
-  - iii to biii° (diatonic to diminished movement)
-  - vi to II7b9 (minor to altered dominant)
-  - IV7 to #iv° (subdominant to diminished)
-  - #ivø7 to VII7 (half-diminished to dominant)
-
-### Phrase Length Options
-- **Short**: Concise musical phrases
-- **Long**: Extended musical phrases with more development
-
-### Interactive Learning Features
-- **Progressive Reveal**: Phrases initially display with the second half hidden as rests, allowing users to:
-  1. View the first half of the phrase
-  2. Attempt to complete the phrase themselves
-  3. Reveal the full phrase to check their answer
-  - This approach encourages active learning and prediction skills
-
-- **Keyboard Navigation**: Support for keyboard shortcuts:
-  - Enter/Space: Toggle between partial and full phrase view
-  - Escape/Delete/Backspace: Navigate backward through screens
-
-### Responsive Design
-- Optimized for both mobile and desktop use
-- Automatic orientation handling for mobile devices
-- Prevents unwanted zooming and scaling for better usability
+```
+lines-voicings/
+├── index.html              # Main entry point
+├── lines.html              # Bebop Practice Program
+├── app.js                  # Lines program logic
+├── data.js                 # Musical data structures
+├── music-utils.js          # Music utility functions
+├── phrase-generator.js     # Phrase generation logic
+├── styles.css              # Main stylesheet
+├── server.py               # Local development server
+├── Chord Practice Program/ # Voicings program
+│   ├── index.html
+│   ├── app.js
+│   ├── styles.css
+│   └── audio/              # Chord audio files
+└── README.md
+```
 
 ## How to Use
 
-1. **Start**: Click "Login" on the welcome screen (no actual authentication required)
-2. **Select Mode**: Choose between Random or Designate mode
-3. **Select Key** (if in Designate mode): Choose from all 12 keys
-4. **Select Phrase Type**: Choose from various chord progressions and phrase types
-5. **Select Chord Type** (for 7sus4): Choose the specific chord quality
-6. **Select Length**: Choose between short or long phrases
-7. **Practice**: 
-   - View the partial phrase
-   - Try to predict/play the continuation
-   - Click "Show Full" to reveal the complete phrase
-   - Click "Generate Next" to create a new phrase
+1. **Start the Application**: Run the server and open the main page
+2. **Choose Program**: 
+   - Click "Lines" for bebop phrase practice
+   - Click "Voicings" for chord voicing practice
+3. **Navigate**: Use the return arrows in the bottom-right corner to navigate back to the main menu
+4. **Practice**: Follow the on-screen instructions for each program
 
 ## Technical Implementation
-The application uses:
-- HTML5, CSS3, and JavaScript
-- ABC notation for music rendering (via abcjs library)
-- Custom algorithms for musical phrase generation based on bebop vocabulary
-- Cell-based phrase construction mimicking jazz language patterns
 
-## Educational Approach
-The program is built on a pedagogical approach that:
-- Presents idiomatic jazz language in context
-- Encourages active learning through the partial-reveal mechanism
-- Provides systematic exposure to different harmonic contexts
-- Allows focused practice on specific progressions or comprehensive review
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Music Rendering**: ABC notation via abcjs library
+- **Server**: Python HTTP server for local development
+- **Design**: Glassmorphism UI with responsive layout
 
 ## Credits
-Made by tsy (tungsyauy@gmail.com) 
+
+Made by tsy  
+Contact: tungsyauy@gmail.com
